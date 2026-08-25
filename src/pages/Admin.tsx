@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-const API_BASE = import.meta.env.VITE_API_URL || "/api";
+const ownerDashboardHost = import.meta.env.VITE_OWNER_DASHBOARD_HOST;
+const API_BASE = ownerDashboardHost && window.location.hostname === ownerDashboardHost ? "/api" : import.meta.env.VITE_API_URL || "/api";
 type Summary = {
     generatedAt: number;
     activeRuntimeSessions: number;

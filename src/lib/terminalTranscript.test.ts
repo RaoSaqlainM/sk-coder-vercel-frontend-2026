@@ -8,11 +8,11 @@ describe("terminal transcript prompt handling", () => {
         expect(isCleanLinuxPrompt("browser-terminal-lifecycle-ok")).toBe(false);
     });
 
-    it("drops only a consecutive reconnect prompt while retaining command output and the next prompt", () => {
-        expect(filterConsecutivePromptLines(["node@sk-coder:~$"], ["node@sk-coder:~$", "browser-terminal-lifecycle-ok", "node@sk-coder:~$"], "output")).toEqual(["browser-terminal-lifecycle-ok", "node@sk-coder:~$"]);
+    it("drops reconnect prompts while retaining command output", () => {
+        expect(filterConsecutivePromptLines(["node@sk-coder:~$"], ["node@sk-coder:~$", "browser-terminal-lifecycle-ok", "node@sk-coder:~$"], "output")).toEqual(["browser-terminal-lifecycle-ok"]);
     });
 
-    it("normalizes terminal carriage-return prompt variants before comparing them", () => {
-        expect(filterConsecutivePromptLines(["\rnode@sk-coder:~$"], ["node@sk-coder:~$ ", "browser-ack-once-ok", "\rnode@sk-coder:~$"], "output")).toEqual(["browser-ack-once-ok", "node@sk-coder:~$"]);
+    it("drops carriage-return prompt variants from rendered output", () => {
+        expect(filterConsecutivePromptLines(["\rnode@sk-coder:~$"], ["node@sk-coder:~$ ", "browser-ack-once-ok", "\rnode@sk-coder:~$"], "output")).toEqual(["browser-ack-once-ok"]);
     });
 });

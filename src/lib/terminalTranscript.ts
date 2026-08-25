@@ -7,6 +7,8 @@ export function filterConsecutivePromptLines(existing: string[], incoming: strin
     const accepted: string[] = [];
     for (const line of incoming) {
         const prompt = isCleanLinuxPrompt(line);
+        if (lineType === "output" && prompt)
+            continue;
         const normalized = prompt ? line.trim() : line;
         const duplicatePrompt = lineType === "output" && prompt && isCleanLinuxPrompt(previous) && previous.trim() === normalized;
         if (!duplicatePrompt)
